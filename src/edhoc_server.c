@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
 	fclose(keyfile_pr);
 
 	const char *filepath_msg_1 = "./edhoc_server_INBOX/edhoc_sym_msg1_RAW.txt";
-	const char *filepath_msg_2 = "./edhoc_client_INBOX/edhoc_sym_msg2_RAW.txt";
+	const char *filepath_msg_2 = "./edhoc_MitM_client_INBOX/edhoc_sym_msg2_RAW.txt";
 	const char *filepath_msg_3 = "./edhoc_server_INBOX/edhoc_sym_msg3_RAW.txt";
 
 	// Receive message 1
@@ -41,12 +41,12 @@ int main(int argc, char *argv[])
 	sleep(1);
 
 	cbor_item_t *received_msg_1 = print_and_get_cbor_array(filepath_msg_1);
-	parse_edhoc_sym_msg_1(received_msg_1);
+	parse_edhoc_sym_msg_1(received_msg_1, "./edhoc_server_INBOX/client_PUBKEY.txt");
 	
 	// Send message 2
 	size_t *msg_1_len = malloc(sizeof(size_t));
 	unsigned char *msg_1 = import_msg(filepath_msg_1, msg_1_len);
-	gen_msg_2_sym(app_2, app_2_sz, session_pkey, filepath_msg_2, msg_1, *msg_1_len);
+	gen_msg_2_sym(app_2, app_2_sz, session_pkey, filepath_msg_2, msg_1, *msg_1_len, "SERVER");
 
 	// Receive message 3
 	printf("\nWaiting for MESSAGE 3...\n");
@@ -59,7 +59,10 @@ int main(int argc, char *argv[])
 	sleep(1);
 
 	cbor_item_t *received_msg_3 = print_and_get_cbor_array(filepath_msg_3);
-	parse_edhoc_sym_msg_3(received_msg_3);
-
+	FILE *keyfile_puR = fopen("./input_parameters/server_PUBKEY.txt", "r");
+	FILE *keyfile_prR = fopen("./input_parameters/server_PrivateKey.txt", "r");
+	parse_edhoc_sym_msg_3(received_msg_3, "./edhoc_server_INBOX/edhoc_sym_msg1_RAW.txt", keyfile_puR, keyfile_prR, "SERVER");
+	fclose(keyfile_puR);
+	fclose(keyfile_prR);
 	return 0;
 }

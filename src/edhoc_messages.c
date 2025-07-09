@@ -227,7 +227,7 @@ unsigned char *gen_msg_1_sym(unsigned char *app_1, size_t app_1_sz, EVP_PKEY *pk
 }
 
 
-unsigned char *gen_msg_2_sym(unsigned char *app_2, size_t app_2_sz, EVP_PKEY *pkey, const char *filepath, unsigned char *msg_1, size_t msg_1_len)
+unsigned char *gen_msg_2_sym(unsigned char *app_2, size_t app_2_sz, EVP_PKEY *pkey, const char *filepath, unsigned char *msg_1, size_t msg_1_len, unsigned char *party)
 {
     int msg_type = EDHOC_SYM_MSG_2;
 
@@ -418,7 +418,7 @@ unsigned char *gen_msg_2_sym(unsigned char *app_2, size_t app_2_sz, EVP_PKEY *pk
 		APP_2 = NULL;
 	}
 
-	cbor_item_t *COSE_ENC_2 = cose_enc_i(AAD_2, APP_2, pkey, msg_type, (unsigned char *)"SERVER");
+	cbor_item_t *COSE_ENC_2 = cose_enc_i(AAD_2, APP_2, pkey, msg_type, party);
 	if (!cbor_array_push(MSG, COSE_ENC_2))
 	{
 		printf("\ncbor_array_push COSE_ENC_2 FAILED.\n");
@@ -441,7 +441,7 @@ unsigned char *gen_msg_2_sym(unsigned char *app_2, size_t app_2_sz, EVP_PKEY *pk
 }
 
 
-unsigned char *gen_msg_3_sym(unsigned char *app_3, size_t app_3_sz, EVP_PKEY *pkey, const char *filepath, unsigned char *msg_1, unsigned char *msg_2, size_t msg_1_len, size_t msg_2_len)
+unsigned char *gen_msg_3_sym(unsigned char *app_3, size_t app_3_sz, EVP_PKEY *pkey, const char *filepath, unsigned char *msg_1, unsigned char *msg_2, size_t msg_1_len, size_t msg_2_len, unsigned char * party)
 {
     int msg_type = EDHOC_SYM_MSG_3;
 
@@ -529,7 +529,7 @@ unsigned char *gen_msg_3_sym(unsigned char *app_3, size_t app_3_sz, EVP_PKEY *pk
 		APP_3 = NULL;
 	}
 	
-	cbor_item_t *COSE_ENC_3 = cose_enc_i(AAD_3, APP_3, pkey, msg_type, (unsigned char *)"CLIENT");
+	cbor_item_t *COSE_ENC_3 = cose_enc_i(AAD_3, APP_3, pkey, msg_type, party);
 	if (!cbor_array_push(MSG, COSE_ENC_3))
 	{
 		printf("\ncbor_array_push COSE_ENC_3 FAILED.\n");
@@ -1021,7 +1021,7 @@ struct msg_3_data
 };
 
 
-void *parse_edhoc_sym_msg_1(cbor_item_t *MSG)
+void *parse_edhoc_sym_msg_1(cbor_item_t *MSG, char *filepath)
 {
 	printf("\n#### PARSING EDHOC MESSAGE 1 ####\n");
 
@@ -1056,7 +1056,7 @@ void *parse_edhoc_sym_msg_1(cbor_item_t *MSG)
 	/*
 	 * Retrieve the other Party's PUBKEY
 	 */
-	const char *filepath = "./edhoc_server_INBOX/client_PUBKEY.txt";
+	// const char *filepath = "./edhoc_server_INBOX/client_PUBKEY.txt";
 	unsigned char *key_pem_format = key_add_headers(MSG_1.E_U_param_2, ephemeral_key_sz, filepath);
 
     cbor_item_t *ecdh_curves_u;
@@ -1125,7 +1125,7 @@ void *parse_edhoc_sym_msg_1(cbor_item_t *MSG)
 }
 
 
-void *parse_edhoc_sym_msg_2(cbor_item_t *MSG)
+void *parse_edhoc_sym_msg_2(cbor_item_t *MSG, char *filepath, char *keyfile_puF, char *keyfile_prF, unsigned char *party)
 {
 	printf("\n#### PARSING EDHOC MESSAGE 2 ####\n");
     
@@ -1166,7 +1166,7 @@ void *parse_edhoc_sym_msg_2(cbor_item_t *MSG)
 	/*
 	 * Retrieve the other Party's PUBKEY
 	 */
-	const char *filepath = "./edhoc_client_INBOX/server_PUBKEY.txt";
+	//const char *filepath = "./edhoc_client_INBOX/server_PUBKEY.txt";
 	unsigned char *key_pem_format = key_add_headers(MSG_2.E_V_param_2, ephemeral_key_sz, filepath);
 
     cbor_item_t *hkdfs_v;
@@ -1220,26 +1220,43 @@ void *parse_edhoc_sym_msg_2(cbor_item_t *MSG)
 	/*
 	 * Import our session pkey
 	 */
+	printf("Importing Session Private Key \n");
 	EVP_PKEY *session_pkey = NULL;
-	FILE *keyfile_pu = fopen("./input_parameters/client_PUBKEY.txt", "r");
+	printf("Private key imported \n");
+	FILE *keyfile_pu = fopen(keyfile_puF, "r");
+	if (!keyfile_pu) {
+	  printf("no ifle opened for public key \n");
+	  exit(1);
+	}
+	printf("public key file opened \n");
+	
 	PEM_read_PUBKEY(keyfile_pu, &session_pkey, NULL, NULL);
-	FILE *keyfile_pr = fopen("./input_parameters/client_PrivateKey.txt", "r");
+	printf("public key read \n");
+	FILE *keyfile_pr = fopen(keyfile_prF, "r");
+	if (!keyfile_pr) {
+	  printf("no ifle opened for private key \n");
+	  exit(1);
+	}
+	printf("private key file opened \n");
 	PEM_read_PrivateKey(keyfile_pr, &session_pkey, NULL, NULL);
+	printf("private key read \n");
 	fclose(keyfile_pu);
 	fclose(keyfile_pr);
-
+	printf("files closed \n");
 	/*
 	 * Create COSE Enc_structure to produce the AAD used for decryption
 	 */
     cbor_item_t *ENC_STRUCT = cbor_new_definite_array(COSE_ENC_STRUCTURE_SZ);
-
+    printf("debug 1\n");
     cbor_item_t *ctx_string = cbor_new_definite_string();
+    printf("debug 2\n");
     ctx_string = cbor_build_string(ENC_STRUCT_CTX);
+    printf("debug 3\n");
     if (!cbor_array_push(ENC_STRUCT, ctx_string))
     {   
         printf("\ncbor_array_push ctx_string FAILED.\n");
     }   
-
+    printf("debug 4\n");
     cbor_item_t *protected_attr = cbor_new_definite_bytestring();
     unsigned char protected_attr_data[] = ENC_STRUCT_PROTECTED_ATTR;
     protected_attr = cbor_build_bytestring(protected_attr_data, ENC_STRUCT_PROTECTED_ATTR_SZ);
@@ -1257,19 +1274,22 @@ void *parse_edhoc_sym_msg_2(cbor_item_t *MSG)
     } 
     unsigned char *enc_struct_buffer;
     size_t enc_struct_buffer_sz, length = cbor_serialize_alloc(ENC_STRUCT, &enc_struct_buffer, &enc_struct_buffer_sz);
-
+    printf("debug 5\n");
 	/*
 	 * Generate K_i and IV for decryption
 	 */
-	unsigned char *k_i = gen_K_i(aad_2_hash, session_pkey, MSG_TYPE, (unsigned char *)"", (unsigned char *)"CLIENT");
-	unsigned char *iv = gen_K_i(aad_2_hash, session_pkey, MSG_TYPE, (unsigned char *)"IV-GENERATION", (unsigned char *)"CLIENT");
-
+	//unsigned char *k_i = gen_K_i(aad_2_hash, session_pkey, MSG_TYPE, (unsigned char *)"", (unsigned char *)"CLIENT");
+        unsigned char *k_i = gen_K_i(aad_2_hash, session_pkey, MSG_TYPE, (unsigned char *)"", party);
+	printf("debug 6\n");
+	//unsigned char *iv = gen_K_i(aad_2_hash, session_pkey, MSG_TYPE, (unsigned char *)"IV-GENERATION", (unsigned char *)"CLIENT");
+	unsigned char *iv = gen_K_i(aad_2_hash, session_pkey, MSG_TYPE, (unsigned char *)"IV-GENERATION", party);
+	printf("debug 7\n");
 	/*
 	 * Decryption
 	 */
 	unsigned char *plaintext = malloc(500);
 	int dec_ciphertext_len = decrypt_ccm(ciphertext, ciphertext_with_tag_len - AES_CCM_64_64_128_tag_sz, enc_struct_buffer, enc_struct_buffer_sz, tag, k_i, iv, plaintext);
-
+	
     printf("\n-----BEGIN EDHOC MESSAGE DESCRIPTION-----\n");
     printf("   MSG_TYPE : %d",MSG_TYPE);
     printf("\n   S_U : ");
@@ -1295,7 +1315,7 @@ void *parse_edhoc_sym_msg_2(cbor_item_t *MSG)
 }
 
 
-void *parse_edhoc_sym_msg_3(cbor_item_t *MSG)
+void *parse_edhoc_sym_msg_3(cbor_item_t *MSG, char *msg1, FILE *keyfile_pu, FILE *keyfile_pr, unsigned char *party)
 {
 	printf("\n#### PARSING EDHOC MESSAGE 3 ####\n");
     
@@ -1331,7 +1351,8 @@ void *parse_edhoc_sym_msg_3(cbor_item_t *MSG)
     unsigned char *buffer_data_3;
     size_t buffer_data_3_sz, data_3_length = cbor_serialize_alloc(message_3_data, &buffer_data_3, &buffer_data_3_sz);
     
-	message_1 = import_msg("./edhoc_server_INBOX/edhoc_sym_msg1_RAW.txt", &message_1_len);
+    //message_1 = import_msg("./edhoc_server_INBOX/edhoc_sym_msg1_RAW.txt", &message_1_len);
+    message_1 = import_msg(msg1, &message_1_len);
 	//message_2 = import_msg("./edhoc_server_INBOX/edhoc_sym_msg1_RAW.txt", &message_2_len);
 		
 	//unsigned char *aad_3 = malloc(message_1_len + message_2_len + data_3_length + 1);
@@ -1381,9 +1402,9 @@ void *parse_edhoc_sym_msg_3(cbor_item_t *MSG)
      * Import our session pkey
      */  
     EVP_PKEY *session_pkey = NULL;
-    FILE *keyfile_pu = fopen("./input_parameters/server_PUBKEY.txt", "r");
+    //FILE *keyfile_pu = fopen("./input_parameters/server_PUBKEY.txt", "r");
     PEM_read_PUBKEY(keyfile_pu, &session_pkey, NULL, NULL);
-    FILE *keyfile_pr = fopen("./input_parameters/server_PrivateKey.txt", "r");
+    //FILE *keyfile_pr = fopen("./input_parameters/server_PrivateKey.txt", "r");
     PEM_read_PrivateKey(keyfile_pr, &session_pkey, NULL, NULL);
     fclose(keyfile_pu);
     fclose(keyfile_pr);
@@ -1421,8 +1442,8 @@ void *parse_edhoc_sym_msg_3(cbor_item_t *MSG)
     /*   
      * Generate K_i and IV for decryption
      */
-    unsigned char *k_i = gen_K_i(aad_3_hash, session_pkey, MSG_TYPE, (unsigned char *)"", (unsigned char *)"SERVER");
-    unsigned char *iv = gen_K_i(aad_3_hash, session_pkey, MSG_TYPE, (unsigned char *)"IV-GENERATION", (unsigned char *)"SERVER");
+    unsigned char *k_i = gen_K_i(aad_3_hash, session_pkey, MSG_TYPE, (unsigned char *)"", party);
+    unsigned char *iv = gen_K_i(aad_3_hash, session_pkey, MSG_TYPE, (unsigned char *)"IV-GENERATION", party);
   
     /*   
      * Decryption

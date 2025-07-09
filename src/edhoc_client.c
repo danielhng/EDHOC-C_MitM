@@ -26,16 +26,16 @@ int main(int argc, char *argv[])
 	fclose(keyfile_pu);
 	fclose(keyfile_pr);
 
-	const char *filepath_msg_1 = "./edhoc_server_INBOX/edhoc_sym_msg1_RAW.txt";
+	const char *filepath_msg_1 = "./edhoc_MitM_server_INBOX/edhoc_sym_msg1_RAW.txt";
 	const char *filepath_msg_2 = "./edhoc_client_INBOX/edhoc_sym_msg2_RAW.txt";
-	const char *filepath_msg_3 = "./edhoc_server_INBOX/edhoc_sym_msg3_RAW.txt";
+	const char *filepath_msg_3 = "./edhoc_MitM_server_INBOX/edhoc_sym_msg3_RAW.txt";
 
 	// Send message 1
 	gen_msg_1_sym(app_1, app_1_sz, session_pkey, filepath_msg_1);
 
 	// Receive message 2
 	printf("\nWaiting for MESSAGE 2...\n");
-	fflush(stdout);
+	fflush(stdout);	
 	while (access(filepath_msg_2, F_OK) == -1)
 	{
 		continue;
@@ -44,14 +44,15 @@ int main(int argc, char *argv[])
 	sleep(1);
 
 	cbor_item_t *received_msg_2 = print_and_get_cbor_array(filepath_msg_2);
-	parse_edhoc_sym_msg_2(received_msg_2);
+	parse_edhoc_sym_msg_2(received_msg_2, "./edhoc_client_INBOX/server_PUBKEY.txt", "./input_parameters/client_PUBKEY.txt", "./input_parameters/client_PrivateKey.txt", "CLIENT");
+
 
 	// Send message 3
 	size_t *msg_1_len = malloc(sizeof(size_t));
 	size_t *msg_2_len = malloc(sizeof(size_t));
 	unsigned char *msg_1 = import_msg(filepath_msg_1, msg_1_len);
 	unsigned char *msg_2 = import_msg(filepath_msg_2, msg_2_len);
-	gen_msg_3_sym(app_3, app_3_sz, session_pkey, filepath_msg_3, msg_1, msg_2, *msg_1_len, *msg_2_len);
+	gen_msg_3_sym(app_3, app_3_sz, session_pkey, filepath_msg_3, msg_1, msg_2, *msg_1_len, *msg_2_len, "CLIENT");
 
 	return 0;
 }

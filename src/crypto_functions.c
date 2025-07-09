@@ -378,6 +378,15 @@ unsigned char *gen_K_i(unsigned char *ext_aad, EVP_PKEY *session_pkey, int msg_t
 	{
 		filepath = "./edhoc_client_INBOX/server_PUBKEY.txt";
 	}
+	else if (strcmp((const char *)party, "MITM_SERVER") == 0)
+	{
+	        filepath = "./edhoc_MitM_server_INBOX/client_PUBKEY.txt";
+	}
+	else if (strcmp((const char *)party, "MITM_CLIENT") == 0)
+	{
+	        filepath = "./edhoc_MitM_client_INBOX/server_PUBKEY.txt";
+	}
+	    
     unsigned char *shared_secret = gen_shared_secret(session_pkey, skeylength, filepath);
     printf("\nShared secret size: %zu\n", shared_secret_sz);
 
