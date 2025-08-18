@@ -1,5 +1,5 @@
 # EDHOC-C
-Implementation of Ephemeral Diffie-Hellman Over COSE (EDHOC) in C.
+Implementation of a Machine-in-the-Middle attack on Alex Krontiris's Ephemeral Diffie-Hellman Over COSE (EDHOC) Key exchange algorithm in C.
 
 EDHOC specification: [EDHOC](https://datatracker.ietf.org/doc/draft-selander-ace-cose-ecdhe/)
 
@@ -7,6 +7,9 @@ EDHOC is a key exchange protocol designed to run over CoAP or OSCOAP. The commun
 
 ## Supported authentication
 EDHOC supports authentication using pre-shared keys (PSK), raw public keys (RPK) and certificates (Cert).
+
+## Attack scope
+The Machine-in-the-Middle attack allows a good insight on what is possible in a context of poor authentication. It is supposed that the attacker has had access to one of the previous authentication methods informations to perform the attack.
 
 ### Dependencies
 OpenSSL version 1.1.0 (includes X25519 elliptic curve) or newer
@@ -19,16 +22,14 @@ libcbor (CBOR format implementation for C)
 ```sh
 $ cd EDHOC-C/src
 $ make clean && make
-$ ./edhoc-client
+$ ./edhoc-server
 ```
-Open a new terminal in the same directory and run the server
+Open a new terminal in the same directory and run the MitM
+```
+$ ./edhoc-MitM
+```
+Open a third terminal in the same directory and run the server
 ```
 $ ./edhoc-server
 ```
 
-### TODO
-CoAP integration
-
-Certificate enrollment over EDHOC
-
-Add documentation
