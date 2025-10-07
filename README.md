@@ -19,16 +19,17 @@ libb64 (Base64 Encoding/Decoding Routines)
 libcbor (CBOR format implementation for C)
 
 ### Usage
+Open a new terminal and run the server
 ```sh
 $ cd EDHOC-C/src
 $ make clean && make
 $ ./edhoc-server
 ```
-Open a new terminal in the same directory and run the MitM
+Open a new terminal in the same directory and run attacker
 ```
 $ ./edhoc-MitM
 ```
-Open a third terminal in the same directory and run the server
+Open a third terminal in the same directory and run the client
 ```
 $ ./edhoc-client
 ```
