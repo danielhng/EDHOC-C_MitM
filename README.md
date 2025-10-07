@@ -30,6 +30,6 @@ $ ./edhoc-MitM
 ```
 Open a third terminal in the same directory and run the server
 ```
-$ ./edhoc-server
+$ ./edhoc-client
 ```
 
