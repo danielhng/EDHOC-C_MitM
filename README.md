@@ -34,3 +34,6 @@ Open a third terminal in the same directory and run the client
 $ ./edhoc-client
 ```
 
+### See the code in action
+
+[![Code in action](https://img.youtube.com/vi/JCzHngC4NSE/0.jpg)](https://www.youtube.com/watch?v=JCzHngC4NSE)
