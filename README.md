@@ -37,3 +37,5 @@ $ ./edhoc-client
 ### See the code in action
 
 [![Code in action](https://img.youtube.com/vi/JCzHngC4NSE/0.jpg)](https://www.youtube.com/watch?v=JCzHngC4NSE)
+
+[![Code in action](https://img.youtube.com/vi/5VihBhiBYPw/0.jpg)](https://www.youtube.com/watch?v=5VihBhiBYPw)
