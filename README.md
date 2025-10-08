@@ -34,7 +34,7 @@ Open a third terminal in the same directory and run the client
 $ ./edhoc-client
 ```
 
-### See the code in action
+### See the code in action, under the [CoopeRIS](https://github.com/michele-segata/cooperis/) simulator
 
 [![Code in action](https://img.youtube.com/vi/JCzHngC4NSE/0.jpg)](https://www.youtube.com/watch?v=JCzHngC4NSE)
 
