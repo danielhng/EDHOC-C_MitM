@@ -8,6 +8,9 @@ EDHOC is a key exchange protocol designed to run over CoAP or OSCOAP. The commun
 ## Supported authentication
 EDHOC supports authentication using pre-shared keys (PSK), raw public keys (RPK) and certificates (Cert).
 
+## Assumptions
+The scenario assumes weak authentication between parties or key escrow techniques (e.g., known pre-shared cryptographic keys held in trust, due to legally mandated situations). The same assumptions would hold for any other centralized PKI-based authentication protocol. 
+
 ## Attack scope
 The Machine-in-the-Middle attack allows a good insight on what is possible in a context of poor authentication. It is supposed that the attacker has had access to one of the previous authentication methods informations to perform the attack.
 
