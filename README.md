@@ -1,5 +1,4 @@
-# EDHOC-C
-Implementation of a Machine-in-the-Middle attack on Alex Krontiris's Ephemeral Diffie-Hellman Over COSE (EDHOC) Key exchange algorithm in C.
+# Implementation of a Machine-in-the-Middle attack on Krontiris' Ephemeral Diffie-Hellman Over COSE (EDHOC)
 
 EDHOC specification: [EDHOC](https://datatracker.ietf.org/doc/draft-selander-ace-cose-ecdhe/)
 
