@@ -8,12 +8,11 @@
 ## sudo apt-get install build-essential
 ## then, sudo apt-get install cmake
 
-##Then
 
-echo "main repo"
-git clone https://github.com/alexkrontiris/EDHOC-C.git
-echo "installing dependencies"
-echo "1. openssl, manually" 
+echo "1. clone the main repo"
+git clone https://github.com/danielhng/EDHOC-C_MitM
+echo "installing main dependencies"
+echo "2. openssl, manually" 
 mkdir openssl
 cd openssl/
 wget https://www.openssl.org/source/openssl-1.1.1m.tar.gz
@@ -22,10 +21,10 @@ cd openssl-1.1.1m/
 ./config --prefix=/opt/openssl --openssldir=/opt/openssl/ssl
 make
 sudo make install
-echo "2. libb64, using apt" 
+echo "3. libb64, using apt" 
 sudo apt-get install libb64-dev
 sudo apt-get install libb64-0d
-echo "3. libcbor, from https://github.com/alexkrontiris/EDHOC-C" 
+echo "4. libcbor, from https://github.com/alexkrontiris/EDHOC-C" 
 cd ..
 ls
 cd libcbor/
@@ -38,7 +37,7 @@ cd EDHOC-C/
 ln -s ../libcbor/
 make clean
 ./make.sh
-export LD_LIBRARY_PATH=$HOME/Desktop/EDHOC-C/openssl/openssl-1.1.1m/:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=$HOME/EDHOC-C_MitM/openssl/openssl-1.1.1m/:$LD_LIBRARY_PATH
 ./edhoc-server 
 ./edhoc-MitM 
 ./edhoc-client
