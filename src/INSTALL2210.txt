@@ -1,0 +1,44 @@
+#xubuntu2210
+
+##In case libcbor was already installed, try first
+## apt-get remove libcbor-dev
+## apt-get remove libcbor0.10
+
+##In case of compilation problems, try first:
+## sudo apt-get install build-essential
+## then, sudo apt-get install cmake
+
+##Then
+
+echo "main repo"
+git clone https://github.com/alexkrontiris/EDHOC-C.git
+echo "installing dependencies"
+echo "1. openssl, manually" 
+mkdir openssl
+cd openssl/
+wget https://www.openssl.org/source/openssl-1.1.1m.tar.gz
+tar zxvf openssl-1.1.1m.tar.gz 
+cd openssl-1.1.1m/
+./config --prefix=/opt/openssl --openssldir=/opt/openssl/ssl
+make
+sudo make install
+echo "2. libb64, using apt" 
+sudo apt-get install libb64-dev
+sudo apt-get install libb64-0d
+echo "3. libcbor, from https://github.com/alexkrontiris/EDHOC-C" 
+cd ..
+ls
+cd libcbor/
+git clone https://github.com/alexkrontiris/libcbor.git
+sudo apt-get install cmake
+cmake -DCMAKE_BUILD_TYPE=Release libcbor
+make
+cd ..
+cd EDHOC-C/
+ln -s ../libcbor/
+make clean
+./make.sh
+export LD_LIBRARY_PATH=$HOME/Desktop/EDHOC-C/openssl/openssl-1.1.1m/:$LD_LIBRARY_PATH
+./edhoc-server 
+./edhoc-MitM 
+./edhoc-client
