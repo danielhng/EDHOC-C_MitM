@@ -11,7 +11,7 @@ EDHOC supports authentication using pre-shared keys (PSK), raw public keys (RPK)
 The attack scenario assumes compromised long-term authentication credentials of the parties or key escrow techniques (e.g., known pre-shared cryptographic keys held in trust, due to legally mandated situations). The same attack assumption would break any other centralized PKI-based authentication protocol. 
 
 ## Attack scope
-The Machine-in-the-Middle attack allows a good insight on what is possible in a context of poor authentication. It is supposed that the attacker has had access to one of the previous authentication methods informations to perform the attack.
+The attack allows a good insight on what is possible in a context of poor authentication. It is supposed that the attacker has had access to one of the previous authentication methods informations to perform the attack.
 
 ### Dependencies
 OpenSSL version 1.1.0 (includes X25519 elliptic curve) or newer
