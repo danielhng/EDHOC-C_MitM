@@ -38,6 +38,6 @@ $ ./edhoc-client
 
 ### See the code in action, under the [CoopeRIS](https://github.com/michele-segata/cooperis/) simulator
 
-[![Code in action](https://img.youtube.com/vi/JCzHngC4NSE/0.jpg)](https://www.youtube.com/watch?v=JCzHngC4NSE)
+[![Code in action](https://img.youtube.com/vi/h1KbDFak0xQ/0.jpg)](https://www.youtube.com/watch?v=h1KbDFak0xQ)
 
-[![Code in action](https://img.youtube.com/vi/5VihBhiBYPw/0.jpg)](https://www.youtube.com/watch?v=5VihBhiBYPw)
+[![Code in action](https://img.youtube.com/vi/zyN18Rd1N3Y/0.jpg)](https://www.youtube.com/watch?v=zyN18Rd1N3Y)
