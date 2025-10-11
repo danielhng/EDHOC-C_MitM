@@ -1,4 +1,4 @@
-# Implementation of a Machine-in-the-Middle attack on Krontiris' Ephemeral Diffie-Hellman Over COSE (EDHOC)
+# Man-in-the-Middle Proof-of-Concept on Krontiris’ Ephemeral Diffie-Hellman Over COSE (EDHOC) in C
 
 EDHOC specification: [EDHOC](https://datatracker.ietf.org/doc/draft-selander-ace-cose-ecdhe/)
 
