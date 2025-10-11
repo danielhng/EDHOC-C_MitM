@@ -36,6 +36,10 @@ Open a third terminal in the same directory and run the client
 $ ./edhoc-client
 ```
 
+### Virtual machine with the code
+
+A virtual machine (for VirtualBox) running the simulator and the attack  is <a href="https://drive.google.com/file/d/1Na5uALHqnS0E2FU3mLB1swBXDvZe9FMm">available online</a>.
+
 ### See the code in action, under the [CoopeRIS](https://github.com/michele-segata/cooperis/) simulator
 
 [![Code in action](https://img.youtube.com/vi/zyN18Rd1N3Y/0.jpg)](https://www.youtube.com/watch?v=zyN18Rd1N3Y)
