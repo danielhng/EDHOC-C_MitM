@@ -1,4 +1,4 @@
-# Man-in-the-Middle Proof-of-Concept on Krontiris’ Ephemeral Diffie-Hellman Over COSE (EDHOC) in C
+# Man-in-the-Middle Proof-of-Concept via Krontiris’ Ephemeral Diffie-Hellman Over COSE (EDHOC) in C
 
 EDHOC specification: [EDHOC](https://datatracker.ietf.org/doc/draft-selander-ace-cose-ecdhe/)
 
@@ -23,7 +23,7 @@ libcbor (CBOR format implementation for C)
 ### Usage
 Open a new terminal and run the server
 ```sh
-$ cd EDHOC-C/src
+$ cd EDHOC-C_MitM/src
 $ make clean && make
 $ ./edhoc-server
 ```
@@ -42,6 +42,6 @@ $ ./edhoc-client
 
 [![Code in action](https://img.youtube.com/vi/h1KbDFak0xQ/0.jpg)](https://www.youtube.com/watch?v=h1KbDFak0xQ)
 
-### Virtual machines with the code
+### Virtual machines to test the code
 
-Virtual machines (for VirtualBox) running the simulator and the attack are <a href="https://drive.google.com/drive/folders/12vVhr9tcIHX-GdT9XbeFBY6vvSsRyx5c">available online</a>.
+Virtual machines running the simulator and the attack code are <a href="https://drive.google.com/drive/folders/12vVhr9tcIHX-GdT9XbeFBY6vvSsRyx5c">available online</a>.
