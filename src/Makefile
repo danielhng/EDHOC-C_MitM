@@ -1,6 +1,6 @@
 CC	= gcc
-CFLAGS	= -Wall
-LDFLAGS	= -lcrypto -lb64 /usr/local/lib64/libcbor.a
+CFLAGS	= -fcommon -I./libcbor/  -I./libcbor/libcbor/src/ -I/opt/openssl/include
+LDFLAGS	= -lcrypto -lb64 -L/opt/openssl/lib -L./libcbor/src/ ./libcbor/src/libcbor.a
 
 CLIENT_OBJFILES	= crypto_functions.o edhoc_client.o edhoc_messages.o \
 			  io_functions.o other_functions.o

@@ -36,8 +36,9 @@ cd ..
 cd EDHOC-C/
 ln -s ../libcbor/
 make clean
-./make.sh
+make
 export LD_LIBRARY_PATH=$HOME/EDHOC-C_MitM/openssl/openssl-1.1.1m/:$LD_LIBRARY_PATH
+echo "add the 'export LD_LIBRARY_PATH=$HOME/EDHOC-C_MitM/openssl/openssl-1.1.1m/:$LD_LIBRARY_PATH' as well in your .bashrc, for instance"
 ./edhoc-server 
 ./edhoc-MitM 
 ./edhoc-client
