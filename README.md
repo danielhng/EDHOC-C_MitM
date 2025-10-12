@@ -42,6 +42,6 @@ $ ./edhoc-client
 
 [![Code in action](https://img.youtube.com/vi/h1KbDFak0xQ/0.jpg)](https://www.youtube.com/watch?v=h1KbDFak0xQ)
 
-### Virtual machine with the code
+### Virtual machines with the code
 
-A virtual machine (for VirtualBox) running the simulator and the attack  is <a href="https://drive.google.com/file/d/1Na5uALHqnS0E2FU3mLB1swBXDvZe9FMm">available online</a>.
+Virtual machines (for VirtualBox) running the simulator and the attack are <a href="https://drive.google.com/drive/folders/12vVhr9tcIHX-GdT9XbeFBY6vvSsRyx5c">available online</a>.
