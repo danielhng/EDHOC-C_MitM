@@ -53,10 +53,11 @@ If you use the code for research purposes, please cite:
 Daniel Hennig and Joaquin Garcia-Alfaro. Man-in-the-Middle Proof-of-Concept via Krontiris' Ephemeral Diffie-Hellman Over COSE (EDHOC) in C, 2025, https://doi.org/10.48550/arXiv.2510.10574.
 
 ```
-@misc{Hennig2025MitMTechReport,
-  title={Man-in-the-Middle Proof-of-Concept via Krontiris' Ephemeral Diffie-Hellman Over COSE (EDHOC) in C}, 
+@techreport{Hennig2025MitMTechReport,
+  title={{Man-in-the-Middle Proof-of-Concept via Krontiris' Ephemeral Diffie-Hellman Over COSE (EDHOC) in C}}, 
   author={Hennig, Daniel and Garcia-Alfaro, Joaquin},
   year={2025},
+  institution = {SAMOVAR, Télécom SudParis, Institut Polytechnique de Paris, 91120 Palaiseau, France},
   eprint={2510.10574},
   archivePrefix={arXiv},
   primaryClass={cs.CR},
