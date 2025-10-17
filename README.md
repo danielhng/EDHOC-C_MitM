@@ -45,3 +45,21 @@ $ ./edhoc-client
 ### Virtual machines to test the code
 
 Virtual machines running the simulator and the attack code are <a href="https://drive.google.com/drive/folders/12vVhr9tcIHX-GdT9XbeFBY6vvSsRyx5c">available online</a>.
+
+## References
+
+If you use the code for research purposes, please cite:
+
+Daniel Hennig and Joaquin Garcia-Alfaro. Man-in-the-Middle Proof-of-Concept via Krontiris' Ephemeral Diffie-Hellman Over COSE (EDHOC) in C, 2025, https://doi.org/10.48550/arXiv.2510.10574.
+
+```
+@misc{Hennig2025MitMTechReport,
+  title={Man-in-the-Middle Proof-of-Concept via Krontiris' Ephemeral Diffie-Hellman Over COSE (EDHOC) in C}, 
+  author={Hennig, Daniel and Garcia-Alfaro, Joaquin},
+  year={2025},
+  eprint={2510.10574},
+  archivePrefix={arXiv},
+  primaryClass={cs.CR},
+  url={https://arxiv.org/abs/2510.10574}, 
+}
+```
