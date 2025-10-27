@@ -1,3 +1,6 @@
+[![arXiv](https://img.shields.io/badge/arXiv-2510.10574-b31b1b.svg)](https://arxiv.org/abs/2510.10574)
+[![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
+
 # Man-in-the-Middle Proof-of-Concept via Krontiris’ Ephemeral Diffie-Hellman Over COSE (EDHOC) in C
 
 EDHOC specification: [EDHOC](https://datatracker.ietf.org/doc/draft-selander-ace-cose-ecdhe/)
